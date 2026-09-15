@@ -24,14 +24,18 @@ const Button = ({
 
   const variantClasses = {
     primary:
-      "border-(--olive) bg-(--olive) text-(--cream) hover:border-(--olive-light) hover:bg-(--olive-light)",
+      "border-(--bronze) bg-(--bronze) text-white hover:border-(--brown) hover:bg-(--brown)",
     outline:
       "border-(--brown) bg-transparent text-(--brown) hover:bg-(--brown) hover:text-(--cream)",
     light:
-      "border-(--cream) bg-(--cream) text-(--olive) hover:border-(--gold) hover:bg-(--gold) hover:text-(--ink)",
+      "border-(--cream) bg-(--cream) text-(--brown) hover:border-(--border) hover:bg-(--ivory)",
   };
 
-  const contents = <span>{children}</span>;
+  const contents = (
+    <span className="inline-flex items-center justify-center gap-5">
+      {children}
+    </span>
+  );
 
   if (href) {
     return (

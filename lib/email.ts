@@ -1,5 +1,5 @@
 type WebsiteEmail = {
-  formName: "contact" | "antique";
+  formName: string;
   replyTo: string;
   subject: string;
   text: string;
@@ -30,7 +30,7 @@ export async function sendWebsiteEmail({
       headers: {
         Authorization: `Bearer ${apiKey}`,
         "Content-Type": "application/json",
-        "Idempotency-Key": `amazing-grace-${formName}-${crypto.randomUUID()}`,
+        "Idempotency-Key": `black-pearl-${formName}-${crypto.randomUUID()}`,
       },
       body: JSON.stringify({
         from: fromEmail,

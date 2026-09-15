@@ -1,18 +1,15 @@
-const defaultSiteUrl = "https://www.amazinggraceantiques.com";
 const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
-
 export const socialImage = {
-  url: "/opengraph-image.jpg",
-  width: 1440,
-  height: 1080,
-  alt: "Amazing Grace Antiques in Lufkin, Texas",
+  url: "/images/Banner.png",
+  width: 1280,
+  height: 784,
+  alt: "Black Pearl Collectionz bronze BPC branding",
 } as const;
-
 export const siteConfig = {
-  name: "Amazing Grace Antiques",
-  shortName: "Amazing Grace Antiques",
+  name: "Black Pearl Collectionz, LLC",
+  shortName: "Black Pearl Collectionz",
   description:
-    "Explore antiques, collectibles, jewelry, home décor, vintage clothing, artisan pieces, and one-of-a-kind finds in downtown Lufkin, Texas.",
+    "Small-batch, hand-poured soy candles and wax melts by Queen Matlock. Discover a little everyday luxury with Black Pearl Collectionz.",
   locale: "en_US",
-  siteUrl: (configuredSiteUrl || defaultSiteUrl).replace(/\/+$/, ""),
+  siteUrl: (configuredSiteUrl || "http://localhost:3000").replace(/\/+$/, ""),
 } as const;

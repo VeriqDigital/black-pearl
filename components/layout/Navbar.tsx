@@ -1,188 +1,207 @@
 "use client";
-
+import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
-import { businessConfig } from "@/config/business";
+import { useState } from "react";
 import { navigation } from "@/config/navigation";
+import { products, productImage, priceLabel } from "@/data/products";
+import Modal from "@/components/ui/Modal";
+import {
+  Arrow,
+  BagIcon,
+  MenuIcon,
+  SearchIcon,
+  UserIcon,
+} from "@/components/ui/Icons";
 
-const Wordmark = () => (
-  <span className="wordmark" aria-hidden="true">
-    <span className="wordmark-name">Amazing Grace</span>
-    <span className="wordmark-rule">Antiques</span>
-  </span>
-);
-
-const Navbar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const menuButtonRef = useRef<HTMLButtonElement>(null);
-  const menuRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const desktopQuery = window.matchMedia("(min-width: 1280px)");
-    const closeAtDesktop = (event: MediaQueryListEvent) => {
-      if (event.matches) setIsMenuOpen(false);
-    };
-
-    desktopQuery.addEventListener("change", closeAtDesktop);
-    return () => desktopQuery.removeEventListener("change", closeAtDesktop);
-  }, []);
-
-  useEffect(() => {
-    if (!isMenuOpen) return;
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setIsMenuOpen(false);
-        requestAnimationFrame(() => menuButtonRef.current?.focus());
-        return;
-      }
-
-      if (event.key !== "Tab") return;
-
-      const focusable = menuRef.current?.querySelectorAll<HTMLElement>(
-        "a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled])",
-      );
-      if (!focusable?.length) return;
-
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
-    };
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", handleKeyDown);
-    menuRef.current?.querySelector<HTMLElement>("a[href]")?.focus();
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [isMenuOpen]);
-
+export default function Navbar() {
+  const [panel, setPanel] = useState<
+    "menu" | "search" | "account" | "bag" | null
+  >(null);
+  const [query, setQuery] = useState("");
+  const results = products.filter((product) =>
+    `${product.name} ${product.category === "candles" ? "soy candle" : "wax melt"}`
+      .toLowerCase()
+      .includes(query.toLowerCase().trim()),
+  );
   return (
-    <header className="sticky inset-x-0 top-0 z-50 border-b border-(--border) bg-(--cream)/96 backdrop-blur-md">
-      <div className="border-b border-(--border) bg-(--olive) text-(--cream)">
-        <div className="mx-auto flex min-h-8 max-w-(--container-width) items-center justify-between gap-4 px-5 py-1.5 text-[0.7rem] font-bold uppercase leading-5 tracking-[0.1em] sm:px-8 lg:px-10">
-          <p>
-            <span className="sm:hidden">
-              {businessConfig.announcement.shortMessage}
-            </span>
-            <span className="hidden sm:inline">
-              {businessConfig.announcement.message}
-            </span>
-          </p>
-          <Link
-            href={businessConfig.announcement.href}
-            className="hidden text-(--gold-light) transition hover:text-white sm:block"
-          >
-            {businessConfig.announcement.actionLabel}
-          </Link>
-        </div>
+    <>
+      <div className="announcement">
+        Hand-poured soy candles &amp; wax melts <span>·</span>
+        <span className="announcement-extra"> Elevate your everyday</span>
       </div>
-
-      <nav
-        className="mx-auto flex h-[82px] max-w-(--container-width) items-center justify-between px-5 sm:h-[92px] sm:px-8 lg:px-10 xl:h-[98px]"
-        aria-label="Main navigation"
-      >
-        <Link
-          href="/"
-          aria-label="Amazing Grace Antiques home"
-          className="shrink-0 text-(--olive)"
-        >
-          <Wordmark />
-        </Link>
-
-        <div className="hidden items-center gap-6 xl:flex 2xl:gap-9">
-          {navigation.map((item) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              className="nav-link py-3 text-[0.76rem] font-bold uppercase tracking-[0.08em] text-(--ink) transition-colors hover:text-(--burgundy)"
-            >
-              {item.label}
-            </Link>
-          ))}
-        </div>
-
-        <div className="flex items-center gap-2 xl:hidden">
-          <a
-            href={businessConfig.contact.phoneHref}
-            className="hidden border border-(--border-dark) px-4 py-2.5 text-[0.65rem] font-bold uppercase tracking-[0.12em] text-(--olive) sm:block"
-          >
-            Call the shop
-          </a>
-          <button
-            ref={menuButtonRef}
-            type="button"
-            className="flex size-11 items-center justify-center border border-(--border-dark) text-(--olive) transition hover:bg-(--olive) hover:text-(--cream)"
-            aria-label={
-              isMenuOpen ? "Close navigation menu" : "Open navigation menu"
-            }
-            aria-expanded={isMenuOpen}
-            aria-controls="mobile-navigation-menu"
-            onClick={() => setIsMenuOpen((open) => !open)}
-          >
-            <span className="grid gap-1.5" aria-hidden="true">
-              <span
-                className={`block h-px w-5 bg-current transition-transform ${isMenuOpen ? "translate-y-[7px] rotate-45" : ""}`}
-              />
-              <span
-                className={`block h-px w-5 bg-current transition-opacity ${isMenuOpen ? "opacity-0" : ""}`}
-              />
-              <span
-                className={`block h-px w-5 bg-current transition-transform ${isMenuOpen ? "-translate-y-[7px] -rotate-45" : ""}`}
-              />
-            </span>
-          </button>
-        </div>
-      </nav>
-
-      {isMenuOpen && (
-        <div
-          ref={menuRef}
-          id="mobile-navigation-menu"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Navigation menu"
-          className="absolute inset-x-0 top-full h-[calc(100dvh-114px)] overflow-y-auto border-t border-(--border) bg-(--cream) p-5 sm:h-[calc(100dvh-124px)] xl:hidden"
-        >
-          <nav
-            className="mx-auto grid max-w-(--container-width)"
-            aria-label="Mobile navigation"
-          >
+      <header className="site-header">
+        <nav className="header-inner" aria-label="Main navigation">
+          <div className="desktop-navigation">
             {navigation.map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                onClick={() => setIsMenuOpen(false)}
-                className="border-b border-(--border) px-2 py-4 font-heading text-2xl text-(--olive)"
-              >
+              <Link key={item.label} href={item.href}>
                 {item.label}
               </Link>
             ))}
-            <div className="mt-8 grid gap-2 text-sm text-(--muted)">
-              <a
-                href={businessConfig.contact.phoneHref}
-                className="font-bold text-(--ink)"
+          </div>
+          <button
+            className="icon-button mobile-menu-button"
+            aria-label="Open navigation menu"
+            onClick={() => setPanel("menu")}
+          >
+            <MenuIcon />
+          </button>
+          <Link
+            href="/"
+            className="brand"
+            aria-label="Black Pearl Collectionz home"
+          >
+            <Image
+              src="/images/Logo.png"
+              width={60}
+              height={61}
+              alt=""
+              className="brand-logo"
+            />
+            <span className="wordmark">
+              <span className="wordmark-name">Black Pearl</span>
+              <span className="wordmark-rule">Collectionz</span>
+            </span>
+          </Link>
+          <div className="header-tools">
+            <button
+              className="icon-button"
+              onClick={() => setPanel("search")}
+              aria-label="Search products"
+            >
+              <SearchIcon />
+            </button>
+            <button
+              className="icon-button account-button"
+              onClick={() => setPanel("account")}
+              aria-label="Your account"
+            >
+              <UserIcon />
+            </button>
+            <button
+              className="icon-button bag-button"
+              onClick={() => setPanel("bag")}
+              aria-label="Shopping bag, 0 items"
+            >
+              <BagIcon />
+              <span>0</span>
+            </button>
+          </div>
+        </nav>
+      </header>
+      {panel && (
+        <Modal
+          title={
+            {
+              menu: "Navigation",
+              search: "Search the collection",
+              account: "Your account",
+              bag: "Your shopping bag",
+            }[panel]
+          }
+          onClose={() => setPanel(null)}
+        >
+          {panel === "menu" ? (
+            <>
+              <p className="eyebrow">Black Pearl Collectionz</p>
+              <nav className="mobile-navigation" aria-label="Mobile navigation">
+                {navigation.map((item) => (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    onClick={() => setPanel(null)}
+                  >
+                    {item.label}
+                    <Arrow />
+                  </Link>
+                ))}
+                <button onClick={() => setPanel("account")}>
+                  Your account <UserIcon />
+                </button>
+              </nav>
+            </>
+          ) : panel === "search" ? (
+            <>
+              <p className="eyebrow">Find your everyday luxury</p>
+              <h2>Discover your favorite.</h2>
+              <label className="search-label" htmlFor="product-search">
+                Search candles &amp; wax melts
+              </label>
+              <div className="search-field">
+                <input
+                  id="product-search"
+                  type="search"
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                  placeholder="Try Strawberry Allure…"
+                />
+                <SearchIcon />
+              </div>
+              <p className="search-count" aria-live="polite">
+                {results.length} {results.length === 1 ? "product" : "products"}
+              </p>
+              <div className="search-results">
+                {results.map((product) => (
+                  <Link
+                    key={product.id}
+                    href={`/?product=${product.id}#shop`}
+                    onClick={() => setPanel(null)}
+                  >
+                    <Image
+                      src={productImage(product.image)}
+                      width={50}
+                      height={64}
+                      alt=""
+                    />
+                    <span>
+                      {product.name}
+                      <small>
+                        {product.category === "candles"
+                          ? "Soy candle"
+                          : "Wax melt"}
+                      </small>
+                    </span>
+                    <span>{priceLabel(product.price)}</span>
+                  </Link>
+                ))}
+                {!results.length && (
+                  <p>No matching scents. Try “candle” or “wax melt”.</p>
+                )}
+              </div>
+            </>
+          ) : (
+            <div className="empty-panel">
+              {panel === "bag" ? (
+                <BagIcon width={38} height={38} />
+              ) : (
+                <UserIcon width={38} height={38} />
+              )}
+              <p className="eyebrow">A little luxury awaits</p>
+              <h2>
+                {panel === "bag"
+                  ? "Your bag is waiting."
+                  : "Make yourself at home."}
+              </h2>
+              <p>
+                {panel === "bag"
+                  ? "Find a fragrance that feels like you. Explore our hand-poured candles and wax melts."
+                  : "A place for your favorite fragrances and everyday rituals."}
+              </p>
+              <Link
+                className="solid-link"
+                href="/#shop"
+                onClick={() => setPanel(null)}
               >
-                {businessConfig.contact.phone}
-              </a>
-              <a href={businessConfig.contact.emailHref}>
-                {businessConfig.contact.email}
-              </a>
+                Explore the collection <Arrow />
+              </Link>
+              <p className="preview-note">
+                Homepage preview ·{" "}
+                {panel === "bag" ? "Purchasing" : "Account sign-in"} is not
+                available yet.
+              </p>
             </div>
-          </nav>
-        </div>
+          )}
+        </Modal>
       )}
-    </header>
+    </>
   );
-};
-
-export default Navbar;
+}

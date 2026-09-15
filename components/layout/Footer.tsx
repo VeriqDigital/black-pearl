@@ -1,65 +1,101 @@
+"use client";
 import Link from "next/link";
+import { useState } from "react";
+import Container from "@/components/ui/Container";
+import Modal from "@/components/ui/Modal";
+import { Arrow, InstagramIcon, Sparkle } from "@/components/ui/Icons";
 import { businessConfig } from "@/config/business";
 import { footerLinks } from "@/config/navigation";
-import { siteConfig } from "@/config/site";
 
-const Footer = () => (
-  <footer className="border-t border-white/10 bg-(--olive-deep) text-(--cream)">
-    <div className="mx-auto max-w-(--container-width) px-5 py-16 sm:px-8 sm:py-20 lg:px-10">
-      <div className="grid gap-12 border-b border-white/15 pb-14 md:grid-cols-2 md:gap-x-12 xl:grid-cols-[1.35fr_0.7fr_1fr_0.8fr] xl:gap-10">
-        <div>
-          <p className="font-heading text-4xl leading-none sm:text-5xl">Amazing Grace</p>
-          <p className="mt-2 text-[0.72rem] font-bold uppercase tracking-[0.18em] text-(--gold-light)">Antiques</p>
-          <p className="mt-7 max-w-sm text-base leading-7 text-(--cream)/70 xl:text-[1.05rem] xl:leading-8">
-            A welcoming downtown Lufkin shop filled with antiques, collectibles, vintage pieces, and unexpected finds.
+export default function Footer() {
+  const [legal, setLegal] = useState<string | null>(null);
+  return (
+    <>
+      <footer id="contact" className="site-footer">
+        <Container>
+          <div className="footer-top">
+            <div className="footer-brand">
+              <Link href="/" className="wordmark">
+                <span className="wordmark-name">Black Pearl</span>
+                <span className="wordmark-rule">Collectionz, LLC</span>
+              </Link>
+              <p>
+                Hand-poured, heart-filled,
+                <br />
+                always real.
+              </p>
+              <a
+                className="footer-social"
+                href={businessConfig.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Black Pearl Collectionz on Instagram"
+              >
+                <InstagramIcon />
+              </a>
+            </div>
+            <nav aria-label="Footer navigation">
+              <h2 className="eyebrow">Explore</h2>
+              {footerLinks.map((item) => (
+                <Link key={item.label} href={item.href}>
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+            <div className="footer-collection">
+              <h2 className="eyebrow">Find your fragrance</h2>
+              <Link href="/?collection=candles#shop">Soy candles</Link>
+              <Link href="/?collection=melts#shop">Wax melts</Link>
+              <Link href="/#shop">Our favorites</Link>
+            </div>
+            <div className="footer-contact">
+              <Sparkle width={28} height={28} />
+              <h2>
+                Let’s talk <em>fragrance.</em>
+              </h2>
+              <p>
+                A question, a little inspiration, or just a hello.
+                <br />
+                We’d love to hear from you.
+              </p>
+              <a
+                className="text-link"
+                href={businessConfig.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Connect with Queen <Arrow />
+              </a>
+            </div>
+          </div>
+          <div className="footer-bottom">
+            <p>© 2026 Black Pearl Collectionz. All Rights Reserved.</p>
+            <div>
+              <button onClick={() => setLegal("Privacy Policy")}>
+                Privacy Policy
+              </button>
+              <button onClick={() => setLegal("Terms and Conditions")}>
+                Terms and Conditions
+              </button>
+            </div>
+          </div>
+        </Container>
+      </footer>
+      {legal && (
+        <Modal title={legal} onClose={() => setLegal(null)}>
+          <p className="eyebrow">Black Pearl Collectionz</p>
+          <h2>{legal}</h2>
+          <p className="legal-copy">
+            This homepage is a design preview.{" "}
+            {legal === "Privacy Policy"
+              ? "The shop’s privacy policy will be available when the online store launches. This preview has no account registration, payment collection, or newsletter signup."
+              : "Purchases are not available through this preview. Store terms, shipping information, and returns details will be published before online ordering opens."}
           </p>
-        </div>
-
-        <nav aria-label="Footer navigation">
-          <h2 className="eyebrow text-(--gold-light)">Explore</h2>
-          <ul className="mt-6 space-y-3 text-base leading-7 text-(--cream)/75 xl:text-[1.05rem]">
-            {footerLinks.map((link) => (
-              <li key={link.label}>
-                <Link href={link.href} className="transition hover:text-white">{link.label}</Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        <div>
-          <h2 className="eyebrow text-(--gold-light)">Visit</h2>
-          <address className="mt-6 not-italic text-base leading-7 text-(--cream)/75 xl:text-[1.05rem] xl:leading-8">
-            <p>{businessConfig.contact.addressLine1}</p>
-            <p>{businessConfig.contact.city}, {businessConfig.contact.state} {businessConfig.contact.postalCode}</p>
-            <a href={businessConfig.contact.phoneHref} className="mt-4 block font-bold text-white hover:text-(--gold-light)">{businessConfig.contact.phone}</a>
-            <a href={businessConfig.contact.emailHref} className="block break-all hover:text-white">{businessConfig.contact.email}</a>
-          </address>
-        </div>
-
-        <div>
-          <h2 className="eyebrow text-(--gold-light)">Hours</h2>
-          <dl className="mt-6 space-y-2 text-base leading-7 text-(--cream)/75">
-            {businessConfig.hoursSummary.map(({ days, hours }) => (
-              <div key={days} className="flex justify-between gap-4"><dt>{days}</dt><dd className="text-white">{hours}</dd></div>
-            ))}
-          </dl>
-          <a
-            href={businessConfig.socialLinks[0].href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-6 inline-block text-[0.72rem] font-bold uppercase tracking-[0.1em] text-(--gold-light) hover:text-white"
-          >
-            Follow on Facebook
-          </a>
-        </div>
-      </div>
-
-      <div className="flex flex-col gap-3 pt-7 text-sm leading-6 text-(--cream)/60 sm:flex-row sm:items-center sm:justify-between">
-        <p>© {new Date().getFullYear()} {siteConfig.name}. All rights reserved.</p>
-        <p>Website designed by <Link href="https://www.veriqdigital.com/" target="_blank" rel="noopener noreferrer" className="text-(--cream)/70 hover:text-white">Veriq</Link></p>
-      </div>
-    </div>
-  </footer>
-);
-
-export default Footer;
+          <button className="text-link" onClick={() => setLegal(null)}>
+            Back to the collection <Arrow />
+          </button>
+        </Modal>
+      )}
+    </>
+  );
+}

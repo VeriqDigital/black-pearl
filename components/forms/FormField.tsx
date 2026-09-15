@@ -40,7 +40,7 @@ const FormField = ({
       >
         {label}{" "}
         {required && (
-          <span className="text-(--burgundy)" aria-hidden="true">*</span>
+          <span className="text-(--error)" aria-hidden="true">*</span>
         )}
         {optionalText && (
           <span className="font-normal normal-case tracking-normal text-(--muted)">
@@ -58,7 +58,7 @@ const FormField = ({
         </p>
       )}
       {error && (
-        <p id={errorId} className="mt-2 text-sm text-(--burgundy)">
+        <p id={errorId} className="mt-2 text-sm text-(--error)">
           {error}
         </p>
       )}

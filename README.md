@@ -1,15 +1,15 @@
-# Amazing Grace Antiques
+# Black Pearl Collectionz
 
-Client-ready traditional website demo for Amazing Grace Antiques in Lufkin, Texas.
+A homepage presentation for Queen Matlock’s hand-poured soy candles and wax melts. Built with Next.js 16, React 19, Tailwind CSS 4, and supplied Black Pearl photography.
 
-## Development
+## Develop
 
 ```bash
 npm install
 npm run dev
 ```
 
-Quality checks:
+## Validate
 
 ```bash
 npm run lint
@@ -17,27 +17,19 @@ npx tsc --noEmit
 npm run build
 ```
 
-## Project structure
+## Scope
 
-- `app/`: App Router pages, metadata, redirects, and route-specific Server Actions/state.
-- `components/forms/`: explicit contact and antique forms plus small shared form primitives.
-- `components/layout/`, `components/sections/`, `components/ui/`: shared layout, homepage sections, and UI primitives.
-- `config/site.ts`: site identity, canonical URL, and social image metadata.
-- `config/business.ts`: contact details, hours, announcement, and social links.
-- `config/navigation.ts`: primary navigation, footer links, and shared CTA destinations.
-- `data/`: editorial content such as events and gallery items.
-- `lib/email.ts`: shared Resend delivery integration.
-- `lib/forms/validation.ts`: low-level form extraction and validation helpers.
+This is a homepage mockup. Product filters, product previews, image views, search, and mobile navigation work locally. Account, bag, and legal dialogs are presentation placeholders. There is no authentication, cart state, checkout, inventory, analytics, or CMS. Names and display prices come from the supplied brief and need client confirmation before launch. The Instagram destination uses the handle supplied in the brief.
 
-## Environment variables
+The original Container, Section, Button, font setup, App Router layout, and generic form/email utilities are retained. Obsolete store sections and form endpoints are removed. Contact and About routes lead to the relevant homepage sections.
 
-Copy `.env.example` to `.env.local` and configure:
+## Content
 
-- `NEXT_PUBLIC_SITE_URL`: production origin used for canonical, sitemap, and social metadata.
-- `RESEND_API_KEY`: server-only Resend API key.
-- `CONTACT_FROM_EMAIL`: sender using a domain verified in Resend, optionally with a display name.
-- `CONTACT_TO_EMAIL`: store inbox that receives both website forms.
+- `data/products.ts`: presentation catalog and prices.
+- `components/sections/`: homepage sections.
+- `components/layout/`: responsive header and footer.
+- `app/globals.css`: ivory, blush, and bronze design system and responsive layouts.
+- `public/images/`: original client product photography and branding.
+- `config/`: brand, navigation, social link, and metadata.
 
-If delivery is not configured, the forms show a visitor-safe error and the shop phone number. The antique photo upload remains an intentional placeholder until storage and delivery are configured. Ecommerce, live inventory, and a CMS are out of scope for this phase.
-
-Before launch, review the `TODO(production)` notes in `config/business.ts` and replace or confirm all provisional client details and demo event content.
+The preview is marked noindex. Set `NEXT_PUBLIC_SITE_URL` for a hosted preview. Confirm product details, contact destinations, policies, and the production domain before any live store launch.
