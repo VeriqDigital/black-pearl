@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense, useCallback, useEffect, useState } from "react";
 import Section from "@/components/ui/Section";
 import Modal from "@/components/ui/Modal";
 import { Arrow } from "@/components/ui/Icons";
@@ -63,21 +63,24 @@ function ProductPreview({
   );
 }
 
-export default function FeaturedProducts() {
-  const router = useRouter();
+// Only URL synchronization may suspend during prerendering, never the grid.
+function ProductQuerySync({ onChange }: { onChange: (query: string) => void }) {
   const params = useSearchParams();
-  const collection = params.get("collection");
-  const [filter, setFilter] = useState(
-    collection === "candles" || collection === "melts"
-      ? collection
-      : "featured",
-  );
-  const [selected, setSelected] = useState<Product | undefined>(() =>
-    products.find((product) => product.id === params.get("product")),
-  );
-  const [previousParams, setPreviousParams] = useState(params.toString());
-  if (previousParams !== params.toString()) {
-    setPreviousParams(params.toString());
+  const query = params.toString();
+  useEffect(() => {
+    onChange(query);
+  }, [query, onChange]);
+  return null;
+}
+
+export default function FeaturedProducts() {
+  const [filter, setFilter] = useState("featured");
+  const [selected, setSelected] = useState<Product | undefined>();
+  const [query, setQuery] = useState("");
+  const syncQuery = useCallback((nextQuery: string) => {
+    const params = new URLSearchParams(nextQuery);
+    const collection = params.get("collection");
+    setQuery(nextQuery);
     setFilter(
       collection === "candles" || collection === "melts"
         ? collection
@@ -86,7 +89,7 @@ export default function FeaturedProducts() {
     setSelected(
       products.find((product) => product.id === params.get("product")),
     );
-  }
+  }, []);
   const visibleProducts =
     filter === "featured"
       ? products.slice(0, 4)
@@ -95,6 +98,9 @@ export default function FeaturedProducts() {
         : products.filter((product) => product.category === filter);
   return (
     <Section id="shop" tone="cream" className="featured-section">
+      <Suspense fallback={null}>
+        <ProductQuerySync onChange={syncQuery} />
+      </Suspense>
       <div className="section-top">
         <div>
           <p className="eyebrow">Our featured products</p>
@@ -172,13 +178,11 @@ export default function FeaturedProducts() {
           product={selected}
           onClose={() => {
             setSelected(undefined);
-            if (params.has("product")) {
-              const nextParams = new URLSearchParams(params.toString());
+            const nextParams = new URLSearchParams(query);
+            if (nextParams.has("product")) {
               nextParams.delete("product");
               const query = nextParams.toString();
-              router.replace(`/${query ? `?${query}` : ""}#shop`, {
-                scroll: false,
-              });
+              window.history.replaceState(null, "", `/${query ? `?${query}` : ""}#shop`);
             }
           }}
         />

@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import Hero from "@/components/sections/Hero";
 import FeaturedProducts from "@/components/sections/FeaturedProducts";
 import About from "@/components/sections/About";
@@ -9,9 +8,7 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <Suspense>
-        <FeaturedProducts />
-      </Suspense>
+      <FeaturedProducts />
       <About />
       <Collections />
       <SocialGallery />

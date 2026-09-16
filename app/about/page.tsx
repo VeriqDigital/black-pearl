@@ -162,8 +162,8 @@ export default function AboutPage() {
           <p className="editorial-body">
             We are committed to ensuring 100% satisfaction with every aspect of
             your self-care journey. From the quality of our handmade products to
-            the level of service we provide. If for any reason you're not
-            completely satisfied with your experience, we're here to make it
+            the level of service we provide. If for any reason you&apos;re not
+            completely satisfied with your experience, we&apos;re here to make it
             right. Our dedication to your satisfaction is unwavering, ensuring
             that every moment you spend with our products leaves you feeling
             replenished, rejuvenated, and wholly fulfilled.
