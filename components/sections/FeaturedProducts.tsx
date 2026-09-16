@@ -47,12 +47,8 @@ function ProductPreview({
           </p>
           <h2>{product.name}</h2>
           <p className="preview-price">{priceLabel(product.price)}</p>
-          <p>
-            {product.color}. Made by Black Pearl Collectionz to bring a little
-            more comfort to the spaces you love.
-          </p>
+          <p>{product.color}.</p>
           <div className="preview-details">
-            <span>Made in small batches</span>
             <span>Crafted with care by Queen Matlock</span>
           </div>
           <button className="solid-link" onClick={onClose}>

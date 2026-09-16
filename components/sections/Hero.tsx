@@ -10,13 +10,12 @@ export default function Hero() {
     <section className="hero" aria-labelledby="hero-title">
       <Container className="hero-grid">
         <div className="hero-copy">
-          <p className="eyebrow">Handcrafted. Small batch. Yours.</p>
           <h1 id="hero-title">
             Hand-Poured for
             <br />
             the Moments
             <br />
-            <em>That Matter.</em>
+            <em>That are all yours.</em>
           </h1>
           <p className="hero-description">
             Small-batch soy candles and wax melts designed to bring warmth,
