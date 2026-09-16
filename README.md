@@ -1,6 +1,6 @@
 # Black Pearl Collectionz
 
-A homepage presentation for Queen Matlock’s hand-poured soy candles and wax melts. Built with Next.js 16, React 19, Tailwind CSS 4, and supplied Black Pearl photography.
+A three-page presentation for Queen Matlock’s hand-poured soy candles and wax melts. Built with Next.js 16, React 19, Tailwind CSS 4, and supplied Black Pearl photography.
 
 ## Develop
 
@@ -19,9 +19,9 @@ npm run build
 
 ## Scope
 
-This is a homepage mockup. Product filters, product previews, image views, search, and mobile navigation work locally. Account, bag, and legal dialogs are presentation placeholders. There is no authentication, cart state, checkout, inventory, analytics, or CMS. Names and display prices come from the supplied brief and need client confirmation before launch. The Instagram destination uses the handle supplied in the brief.
+This is a website mockup with Home, About, and Contact pages. Product filters, product previews, image views, search, and mobile navigation work locally. Account, bag, and legal dialogs are presentation placeholders. There is no authentication, cart state, checkout, inventory, analytics, or CMS. Names and display prices come from the supplied brief and need client confirmation before launch. Facebook, Instagram, and TikTok destinations are centralized in `config/business.ts` using the client-supplied URLs.
 
-The original Container, Section, Button, font setup, App Router layout, and generic form/email utilities are retained. Obsolete store sections and form endpoints are removed. Contact and About routes lead to the relevant homepage sections.
+The original Container, Section, Button, font setup, App Router layout, and generic form/email utilities are retained. About and Contact have dedicated routes. The contact form is presentation-only: it validates fields locally, clearly states that messages are not sent, and offers a direct email link. No email endpoint or new service is enabled.
 
 ## Content
 

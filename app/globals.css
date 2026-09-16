@@ -1,5 +1,145 @@
 @import "tailwindcss";
 
+/* Shared social destinations; the existing homepage layout stays intact. */
+.social-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 18px;
+}
+.social-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-width: 44px;
+  min-height: 44px;
+  font-size: 12px;
+}
+.social-links a:hover { color: var(--bronze); }
+.social-links svg { flex-shrink: 0; }
+.footer-social-links { margin-top: 11px; gap: 4px; }
+.gallery-social-links { justify-content: center; margin-top: 16px; }
+
+/* About and Contact extend the established editorial design. */
+.about-page-hero, .contact-page-hero { background: var(--hero-surface); }
+.about-page-hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: clamp(32px, 6vw, 88px);
+}
+.about-page-hero .editorial-copy { padding: 48px 0; }
+.about-page-hero h1, .contact-page-hero h1 {
+  font-size: clamp(46px, 5.2vw, 74px);
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+.editorial-copy .eyebrow, .editorial-centered .eyebrow,
+.about-introduction > div > .eyebrow { margin-bottom: 18px; }
+.editorial-body {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.9;
+  max-width: 550px;
+}
+.editorial-copy h1 + .editorial-body,
+.editorial-copy h2 + .editorial-body { margin-top: 24px; }
+.editorial-body + .editorial-body { margin-top: 16px; }
+.editorial-copy > .text-link { margin-top: 20px; }
+.about-hero-photo, .about-craft-photo { position: relative; overflow: hidden; }
+.about-hero-photo { height: 450px; }
+.about-hero-photo img, .about-craft-photo img { object-fit: cover; }
+.about-introduction, .about-craft-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 7vw, 100px);
+  align-items: center;
+}
+.about-introduction h2, .about-craft-grid h2 { text-wrap: balance; }
+.about-introduction .maker-signature { margin-top: 28px; }
+.editorial-centered { max-width: 780px; margin: auto; text-align: center; }
+.editorial-centered .editorial-body { margin: 24px auto 0; }
+.mission-statement {
+  margin: 24px auto 0;
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-size: clamp(28px, 3vw, 36px);
+  line-height: 1.3;
+  text-wrap: balance;
+}
+.about-craft-photo { aspect-ratio: 1.12; }
+.about-guarantee > .text-link { margin-top: 24px; }
+.about-social-cta { padding: 52px 0; text-align: center; background: var(--social-surface); }
+.about-social-cta h2 { margin: 12px 0 8px; }
+.about-social-handle { display: inline-flex; align-items: center; min-height: 44px; font-size: 16px; color: var(--brown); }
+.about-social-cta .social-links { justify-content: center; margin-top: 12px; }
+.contact-page-hero { padding: 60px 0; }
+.contact-page-hero .editorial-centered { max-width: 900px; }
+.contact-page-hero .editorial-body { max-width: 570px; }
+.contact-content { padding: 72px 0 80px; }
+.contact-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(40px, 7vw, 100px); }
+.contact-grid > *, .about-page-hero-grid > *, .about-introduction > *, .about-craft-grid > * { min-width: 0; }
+.contact-details { padding-top: 9px; }
+.contact-details .eyebrow { margin-bottom: 17px; }
+.contact-email {
+  display: inline-block;
+  max-width: 100%;
+  padding: 8px 0;
+  overflow-wrap: anywhere;
+  color: var(--brown);
+  font-size: clamp(14px, 1.5vw, 19px);
+  text-decoration: underline;
+  text-decoration-color: var(--border-dark);
+  text-underline-offset: 6px;
+}
+.contact-hours { max-width: 410px; margin-top: 34px; }
+.contact-hours dl > div { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 14px; line-height: 1.5; }
+.contact-hours dd { color: var(--muted); white-space: nowrap; }
+.contact-social { margin-top: 34px; }
+.contact-form-panel { padding-left: clamp(32px, 5vw, 72px); border-left: 1px solid var(--border); }
+.contact-form-panel h2 { font-size: clamp(38px, 4vw, 50px); }
+.contact-form { display: grid; gap: 22px; margin-top: 20px; }
+.contact-form-note, .contact-form-status { color: var(--muted); font-size: 13px; line-height: 1.8; }
+.contact-form-note a { color: var(--brown); text-decoration: underline; text-underline-offset: 3px; }
+.contact-form label { display: block; margin-bottom: 9px; color: var(--brown); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; }
+.contact-form input, .contact-form textarea {
+  display: block;
+  width: 100%;
+  min-height: 50px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-dark);
+  border-radius: 0;
+  background: var(--ivory);
+  color: var(--ink);
+  font: inherit;
+  font-size: 16px;
+  line-height: 1.6;
+}
+.contact-form textarea { resize: vertical; min-height: 150px; }
+.contact-form .solid-link { justify-self: start; }
+.contact-form-status:empty { display: none; }
+@media (max-width: 900px) {
+  .contact-grid { gap: 32px; grid-template-columns: 1fr 1fr; }
+  .contact-form-panel { padding-left: 30px; }
+  .contact-social .social-links { gap: 8px 12px; }
+}
+@media (max-width: 700px) {
+  .about-page-hero-grid, .about-introduction, .about-craft-grid, .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+  .about-page-hero-grid { gap: 0; }
+  .about-page-hero .editorial-copy { padding: 42px 0 32px; }
+  .about-page-hero h1, .contact-page-hero h1 { font-size: clamp(42px, 11vw, 60px); }
+  .about-hero-photo { height: auto; aspect-ratio: 1.18; margin-bottom: 24px; }
+  .editorial-body { font-size: 14px; }
+  .about-introduction h2, .about-craft-grid h2, .about-guarantee h2 { font-size: 38px; }
+  .about-social-cta { padding: 40px 0; }
+  .contact-page-hero { padding: 42px 0; }
+  .contact-content { padding: 42px 0 52px; }
+  .contact-hours { max-width: none; }
+  .contact-form-panel { padding: 36px 0 0; border-left: 0; border-top: 1px solid var(--border); }
+  .contact-form .solid-link { width: 100%; }
+}
+
 :root {
   --ivory: #faf6f0;
   --cream: #fffdf9;

@@ -56,3 +56,13 @@ export const InstagramIcon = (props: IconProps) => (
     <circle cx="17.5" cy="6.5" r=".7" fill="currentColor" stroke="none" />
   </svg>
 );
+export const FacebookIcon = (props: IconProps) => (
+  <svg {...base} {...props}>
+    <path d="M14 21v-8h3l.5-4H14V7c0-1.2.4-2 2-2h2V1.5a24 24 0 0 0-3-.2C12 1.3 10 3.2 10 6.7V9H7v4h3v8Z" />
+  </svg>
+);
+export const TikTokIcon = (props: IconProps) => (
+  <svg {...base} {...props}>
+    <path d="M14 3h3c.4 2.5 1.8 4 4 4.5V11a9 9 0 0 1-4-1.5V16a6 6 0 1 1-6-6v3.5a2.5 2.5 0 1 0 3 2.5Z" />
+  </svg>
+);

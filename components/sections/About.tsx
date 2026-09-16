@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import Container from "@/components/ui/Container";
 import { Arrow } from "@/components/ui/Icons";
 import storyImage from "@/public/images/Candle Misc.png";
@@ -32,9 +33,9 @@ export default function About() {
             small-batch soy candles and wax melts are made to turn your everyday
             spaces into somewhere you love to be.
           </p>
-          <a href="#contact" className="text-link">
+          <Link href="/about" className="text-link">
             Discover our story <Arrow />
-          </a>
+          </Link>
           <div className="maker-signature">
             <span>Queen</span>
             <p>

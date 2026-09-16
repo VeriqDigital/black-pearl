@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Container from "@/components/ui/Container";
 import { InstagramIcon } from "@/components/ui/Icons";
+import SocialLinks from "@/components/ui/SocialLinks";
 import { businessConfig } from "@/config/business";
 const gallery = [
   { image: "Strawberry Allure Top.png", alt: "Strawberry-shaped wax details" },
@@ -34,7 +35,7 @@ export default function SocialGallery() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <InstagramIcon /> @blackpearlcollectionz
+              <InstagramIcon /> {businessConfig.instagramHandle}
             </a>
           </h2>
         </div>
@@ -60,6 +61,7 @@ export default function SocialGallery() {
             </a>
           ))}
         </div>
+        <SocialLinks className="gallery-social-links" />
       </Container>
     </section>
   );

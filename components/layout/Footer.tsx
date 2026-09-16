@@ -3,8 +3,8 @@ import Link from "next/link";
 import { useState } from "react";
 import Container from "@/components/ui/Container";
 import Modal from "@/components/ui/Modal";
-import { Arrow, InstagramIcon, Sparkle } from "@/components/ui/Icons";
-import { businessConfig } from "@/config/business";
+import { Arrow, Sparkle } from "@/components/ui/Icons";
+import SocialLinks from "@/components/ui/SocialLinks";
 import { footerLinks } from "@/config/navigation";
 
 export default function Footer() {
@@ -24,15 +24,7 @@ export default function Footer() {
                 <br />
                 always real.
               </p>
-              <a
-                className="footer-social"
-                href={businessConfig.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Black Pearl Collectionz on Instagram"
-              >
-                <InstagramIcon />
-              </a>
+              <SocialLinks className="footer-social-links" />
             </div>
             <nav aria-label="Footer navigation">
               <h2 className="eyebrow">Explore</h2>
@@ -58,14 +50,12 @@ export default function Footer() {
                 <br />
                 We’d love to hear from you.
               </p>
-              <a
+              <Link
                 className="text-link"
-                href={businessConfig.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/contact"
               >
                 Connect with Queen <Arrow />
-              </a>
+              </Link>
             </div>
           </div>
           <div className="footer-bottom">
@@ -86,7 +76,7 @@ export default function Footer() {
           <p className="eyebrow">Black Pearl Collectionz</p>
           <h2>{legal}</h2>
           <p className="legal-copy">
-            This homepage is a design preview.{" "}
+            This website is a design preview.{" "}
             {legal === "Privacy Policy"
               ? "The shop’s privacy policy will be available when the online store launches. This preview has no account registration, payment collection, or newsletter signup."
               : "Purchases are not available through this preview. Store terms, shipping information, and returns details will be published before online ordering opens."}
