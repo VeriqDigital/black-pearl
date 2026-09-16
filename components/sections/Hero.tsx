@@ -15,7 +15,7 @@ export default function Hero() {
             <br />
             the Moments
             <br />
-            <em>That are all yours.</em>
+            <em>That Matter.</em>
           </h1>
           <p className="hero-description">
             Small-batch soy candles and wax melts designed to bring warmth,
